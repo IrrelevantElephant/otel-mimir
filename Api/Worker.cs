@@ -1,4 +1,6 @@
-﻿namespace Api;
+﻿using System.Diagnostics;
+
+namespace Api;
 
 public class Worker : BackgroundService
 {
@@ -13,8 +15,11 @@ public class Worker : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
+            var activity = ActivitySources.Main.StartActivity("WorkerLoop");
+            activity?.AddEvent(new ActivityEvent("Doing some work"));
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
             await Task.Delay(1000, stoppingToken);
+            activity?.Stop();
         }
     }
 }

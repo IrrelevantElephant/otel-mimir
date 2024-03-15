@@ -22,6 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "datasources", "datasources"
 		grafana\datasources\datasources.yaml = grafana\datasources\datasources.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tempo", "tempo", "{F5900E18-D45C-4F55-9CDA-F3F8FD359CB5}"
+	ProjectSection(SolutionItems) = preProject
+		tempo\tempo.yaml = tempo\tempo.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

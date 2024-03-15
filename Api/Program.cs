@@ -18,24 +18,24 @@ if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OTEL_EXPORTER
 {
     Action<ResourceBuilder> appResourceBuilder =
     resource => resource
+        .AddService("api", serviceVersion: "1.0")
         .AddDetector(new ContainerResourceDetector())
         .AddDetector(new HostDetector());
 
     builder.Services.AddOpenTelemetry()
         .ConfigureResource(appResourceBuilder)
         .WithTracing(tracerBuilder =>
-            tracerBuilder.AddAspNetCoreInstrumentation()
-            .AddOtlpExporter());
+            {
+                tracerBuilder.AddAspNetCoreInstrumentation();
+                tracerBuilder.AddSource(ActivitySources.Main.Name);
+                tracerBuilder.AddOtlpExporter();
+            });
 }
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
